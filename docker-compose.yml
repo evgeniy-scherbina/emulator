@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  emulator:
+    image: emulator
+    container_name: emulator
+    restart: unless-stopped
+    networks:
+      - emulator
+
+networks:
+  emulator:
+    driver: bridge
