@@ -35,11 +35,11 @@ func listenAndServe() {
 	}
 }
 
-func client(requestsNum int, goroutinesNum int) {
+func client(requestsNum int, infinityRequests bool, goroutinesNum int) {
 	var wg sync.WaitGroup
 	wg.Add(goroutinesNum)
 
-	for i := 0; i < goroutinesNum; i++ {
+	for i := 0; i < goroutinesNum && !infinityRequests; i++ {
 		go func(i int) {
 			defer wg.Done()
 
@@ -83,7 +83,7 @@ func main() {
 				Name:    "client",
 				Aliases: []string{"c"},
 				Action: func(cCtx *cli.Context) error {
-					client(10, 10)
+					client(10, true, 10)
 					return nil
 				},
 			},
