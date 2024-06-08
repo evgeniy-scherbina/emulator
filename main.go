@@ -39,11 +39,11 @@ func client(requestsNum int, infinityRequests bool, goroutinesNum int) {
 	var wg sync.WaitGroup
 	wg.Add(goroutinesNum)
 
-	for i := 0; i < goroutinesNum && !infinityRequests; i++ {
+	for i := 0; i < goroutinesNum; i++ {
 		go func(i int) {
 			defer wg.Done()
 
-			for j := 0; j < requestsNum; j++ {
+			for j := 0; j < requestsNum || infinityRequests; j++ {
 				address := fmt.Sprintf("http://localhost:%v/hello", defaultPort)
 				resp, err := http.Get(address)
 				if err != nil {
